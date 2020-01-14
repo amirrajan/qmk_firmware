@@ -44,8 +44,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  KC_TILDE,      KC_EXCLAIM,     KC_AT,            KC_HASH,        KC_DOLLAR,      KC_PERCENT,            KC_CIRCUMFLEX, KC_AMPERSAND,     KC_ASTERISK,    KC_LEFT_PAREN,  KC_RIGHT_PAREN,  KC_BSPACE,                       \
  KC_TAB,        KC_QUOTE,       MACRO_PLUS_EQUAL, KC_EQUAL,       KC_ENTER,       KC_TILDE,              KC_QUESTION,   KC_LEFT_PAREN,    KC_RIGHT_PAREN, KC_PIPE,        KC_PLUS,         KC_BSLASH,                       \
  KC_LEFT,       KC_AMPERSAND,   KC_AT,            KC_MINUS,       KC_UNDS,        KC_RABK,               KC_HASH,       KC_LBRACKET,      KC_RBRACKET,    KC_LABK,        KC_COLON,        MACRO_DOUBLE_QUOTE,              \
- KC_RGHT,       KC_COMMA,       KC_ASTERISK,      KC_COMMA,       KC_TRANSPARENT, MACRO_PARENS,          KC_EXCLAIM,    KC_LCBR,          KC_RCBR,        KC_RABK,        KC_QUESTION,     KC_RIGHT_PAREN,                  \
- KC_DOWN,       KC_LALT,        KC_LCMD,          KC_DOLLAR,      KC_BSPACE,      KC_SPACE,               KC_SPACE,      KC_BSPACE,        KC_LEFT,        KC_DOWN,        KC_UP,           KC_RGHT                         \
+ KC_RGHT,       KC_COMMA,       KC_ASTERISK,      KC_COMMA,       RGB_HUI,        MACRO_PARENS,          KC_EXCLAIM,    KC_LCBR,          KC_RCBR,        KC_RABK,        KC_QUESTION,     KC_RIGHT_PAREN,                  \
+ KC_DOWN,       KC_LALT,        KC_LCMD,          KC_DOLLAR,      KC_MS_BTN1,     KC_SPACE,              KC_SPACE,      KC_BSPACE,        KC_LEFT,        KC_DOWN,        KC_UP,           KC_RGHT                         \
 )
 
 };

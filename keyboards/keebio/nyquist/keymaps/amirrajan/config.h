@@ -21,7 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 #define TAPPING_TOGGLE  1
-#define TAPPING_TERM    170
+#define DEBOUNCE    10
+#define TAPPING_TERM    200
 #define PREVENT_STUCK_MODIFIERS
 #define LOCKING_RESYNC_ENABLE
 #define LOCKING_SUPPORT_ENABLE
@@ -30,8 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DISABLE_SPACE_CADET_ROLLOVER
 #undef  BACKLIGHT_LEVELS
 #define BACKLIGHT_LEVELS 1
-#define RGBLIGHT_HUE_STEP 8
-#define RGBLIGHT_SAT_STEP 8
-#define RGBLIGHT_VAL_STEP 8
+#define RGBLIGHT_HUE_STEP 10
+#define RGBLIGHT_SAT_STEP 17
+#define RGBLIGHT_VAL_STEP 17
 
 #endif
