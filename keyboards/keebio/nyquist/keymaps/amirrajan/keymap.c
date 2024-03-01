@@ -3,6 +3,11 @@
 
 #include QMK_KEYBOARD_H
 
+#define MOUSEKEY_DELAY             0
+#define MOUSEKEY_INTERVAL          20
+#define MOUSEKEY_MAX_SPEED         5
+#define MOUSEKEY_TIME_TO_MAX       50
+
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -30,9 +35,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_SYMBOLS] = LAYOUT_ortho_5x12(
  KC_TILDE,      KC_EXCLAIM,     KC_AT,            KC_HASH,        KC_DOLLAR,      KC_PERCENT,            KC_CIRCUMFLEX,    KC_AMPERSAND,   KC_ASTERISK,     KC_LEFT_PAREN,  KC_RIGHT_PAREN,  KC_BACKSPACE,        \
  KC_TAB,        KC_QUOTE,       KC_EQUAL,         KC_EQUAL,       KC_ENTER,       KC_TILDE,              KC_QUESTION,      KC_LEFT_PAREN,  KC_RIGHT_PAREN,  KC_PIPE,        KC_PLUS,         KC_BACKSLASH,        \
- KC_LEFT,       KC_AMPERSAND,   S(KC_S),          KC_MINUS,       KC_UNDS,        KC_RABK,               KC_HASH,          KC_LBRC,        KC_RBRC,         KC_LABK,        KC_COLON,        KC_DQUO, \
+ KC_LEFT,       KC_AMPERSAND,   S(KC_S),          KC_MINUS,       KC_UNDS,        KC_RABK,               KC_HASH,          KC_LBRC,        KC_RBRC,         KC_LABK,        KC_COLON,        KC_DQUO,             \
  KC_RGHT,       KC_COMMA,       KC_ASTERISK,      KC_COMMA,       LGUI(KC_V),     KC_BACKSPACE,          KC_EXCLAIM,       KC_LCBR,        KC_RCBR,         KC_RABK,        KC_QUESTION,     KC_0,                \
- KC_DOWN,       KC_LALT,        KC_LCMD,          KC_DOLLAR,      KC_MS_BTN1,     KC_SPACE,              KC_SPACE,         KC_BACKSPACE,   KC_LEFT,         KC_DOWN,        KC_UP,           KC_RGHT              \
+ KC_DOWN,       KC_LALT,        KC_LCMD,          KC_DOLLAR,      KC_MS_BTN1,     KC_SPACE,              KC_BTN1,          KC_BTN2,        KC_MS_L,         KC_MS_D,        KC_MS_U,         KC_MS_R              \
 ),
 
 [_MODS] = LAYOUT_ortho_5x12(
