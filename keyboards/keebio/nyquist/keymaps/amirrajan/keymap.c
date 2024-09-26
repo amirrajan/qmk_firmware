@@ -2,11 +2,17 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
+#include "keymap_steno.h"
+
+// https://didoesdigital.com/typey-type/lessons/fundamentals/introduction/
 
 #define MOUSEKEY_DELAY             500
 #define MOUSEKEY_INTERVAL          20
 #define MOUSEKEY_MAX_SPEED         5
 #define MOUSEKEY_TIME_TO_MAX       50
+
+#define ST_BOLT QK_STENO_BOLT
+#define ST_GEM  QK_STENO_GEMINI
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -93,11 +99,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_PLOVER] = LAYOUT_ortho_5x12(
- KC_TILDE,      KC_EXCLAIM,     KC_AT,            KC_HASH,        KC_DOLLAR,      KC_PERCENT,            KC_CIRCUMFLEX,    KC_AMPERSAND,   KC_ASTERISK,     KC_LEFT_PAREN,  PLOVER_OR_0,       KC_BACKSPACE,         \
- KC_TAB,        KC_QUOTE,       KC_EQUAL,         KC_EQUAL,       KC_ENTER,       KC_TILDE,              KC_QUESTION,      KC_LEFT_PAREN,  KC_RIGHT_PAREN,  KC_PIPE,        KC_PLUS,              GUI_T(KC_BACKSLASH),  \
- KC_LEFT,       KC_AMPERSAND,   S(KC_S),          KC_MINUS,       KC_UNDS,        KC_RABK,               KC_HASH,          KC_LBRC,        KC_RBRC,         KC_LABK,        KC_COLON,             KC_DQUO,              \
- KC_RGHT,       KC_COMMA,       KC_ASTERISK,      KC_MS_BTN1,     LGUI(KC_V),     KC_BACKSPACE,          KC_EXCLAIM,       KC_LCBR,        KC_RCBR,         KC_RABK,        PHOTOSHOP_PREV_LAYER, PHOTOSHOP_NEXT_LAYER, \
- KC_DOWN,       KC_LALT,        KC_LCMD,          KC_MS_BTN2,     KC_MS_BTN1,     KC_SPACE,              KC_SPACE,         KC_BSPC,        KC_MS_L,         KC_MS_D,        KC_MS_U,              KC_MS_R               \
+ STN_N1,        STN_N2,         STN_N3,           STN_N4,         STN_N5,         STN_N6,        STN_N7,          STN_N8,         STN_N9,          STN_NA,          STN_NB,      STN_NC,              \
+ STN_FN,        STN_S1,         STN_TL,           STN_PL,         STN_HL,         STN_ST1,       STN_ST3,         STN_FR,         STN_PR,          STN_LR,          STN_TR,      STN_DR,              \
+ XXXXXXX,       STN_S2,         STN_KL,           STN_WL,         STN_RL,         STN_ST2,       STN_ST4,         STN_RR,         STN_BR,          STN_GR,          STN_SR,      STN_ZR,              \
+ XXXXXXX,       XXXXXXX,        XXXXXXX,          XXXXXXX,        XXXXXXX,        XXXXXXX,       XXXXXXX,         XXXXXXX,        XXXXXXX,         XXXXXXX,        XXXXXXX,      XXXXXXX,             \
+ PLOVER_OR_0,   XXXXXXX,        XXXXXXX,          XXXXXXX,        STN_A,          STN_O,         STN_E,           STN_U,          XXXXXXX,         XXXXXXX,        XXXXXXX,      XXXXXXX              \
 )
 
 };
