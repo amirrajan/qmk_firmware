@@ -102,11 +102,8 @@ bool oled_task_kb(void) {
     if (!oled_task_user()) {
         return false;
     }
-    if (is_keyboard_master()) {
-        print_status_narrow();
-    } else {
-        render_logo();
-    }
+
+    oled_write_ln_P(PSTR("LOG\n\nKAY\n\nKAHENGE?"), false);
     return true;
 }
 
