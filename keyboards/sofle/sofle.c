@@ -107,25 +107,21 @@ bool oled_task_kb(void) {
     }
 
     static uint8_t max_wpm[5] = {0, 0, 0, 0, 0}; // Array to keep track of the last 5 highest max WPM
-    uint8_t current_wpm = get_current_wpm();
-    static uint32_t last_clear_time = 0; // Store the last time values were cleared
-    uint32_t current_time = timer_read(); // Get current time
-
-    // Clear max_wpm every hour
-    if ((current_time - last_clear_time) >= 900000) { // 3600000 ms = 1 hour
-        for (uint8_t i = 0; i < 5; i++) {
-            max_wpm[i] = 0;
-        }
-        last_clear_time = current_time;
+    static uint8_t debounce_upper = 255;
+    static uint8_t debounce_lower = 255;
+    debounce_lower -= 1;
+    if (debounce_lower <= 1) {
+      debounce_lower = 255;
+      debounce_upper -= 1;
+      if (debounce_upper <= 1) {
+        debounce_upper = 255;
+        max_wpm[3] = 0;
+        max_wpm[4] = 0;
+      }
     }
+    uint8_t current_wpm = get_current_wpm();
 
     int wpm_already_exists = 0;
-    for (int i = 0; i < 5; i++) {
-        if (max_wpm[i] == current_wpm) {
-            wpm_already_exists = 1;
-            break;
-        }
-    }
 
     // Shift the array if current WPM is greater than any of the saved max WPM values
     if (!wpm_already_exists) {
@@ -152,9 +148,6 @@ bool oled_task_kb(void) {
         }
     }
 
-    oled_write_ln_P(PSTR("WPM:\n"), false);
-    oled_write(get_u8_str(current_wpm, '0'), false);
-    oled_write_ln_P(PSTR("\n"), false);
     oled_write_ln_P(PSTR("MAX:\n"), false);
     for(uint8_t i = 0; i < 5; i++) {
         oled_write(get_u8_str(max_wpm[i], '0'), false);
