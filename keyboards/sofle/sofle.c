@@ -1,7 +1,10 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
+#include "wpm.h"
 #include "quantum.h"
 
+#define WPM_ENABLE 1
+#define WPM_LAUNCH_CONTROL 1
 #ifdef SWAP_HANDS_ENABLE
 
 __attribute__ ((weak))
@@ -103,7 +106,61 @@ bool oled_task_kb(void) {
         return false;
     }
 
-    oled_write_ln_P(PSTR("LOG\n\nKAY\n\nKAHENGE?"), false);
+    static uint8_t max_wpm[5] = {0, 0, 0, 0, 0}; // Array to keep track of the last 5 highest max WPM
+    uint8_t current_wpm = get_current_wpm();
+    static uint32_t last_clear_time = 0; // Store the last time values were cleared
+    uint32_t current_time = timer_read(); // Get current time
+
+    // Clear max_wpm every hour
+    if ((current_time - last_clear_time) >= 900000) { // 3600000 ms = 1 hour
+        for (uint8_t i = 0; i < 5; i++) {
+            max_wpm[i] = 0;
+        }
+        last_clear_time = current_time;
+    }
+
+    int wpm_already_exists = 0;
+    for (int i = 0; i < 5; i++) {
+        if (max_wpm[i] == current_wpm) {
+            wpm_already_exists = 1;
+            break;
+        }
+    }
+
+    // Shift the array if current WPM is greater than any of the saved max WPM values
+    if (!wpm_already_exists) {
+        if (current_wpm > max_wpm[4]) {
+            max_wpm[0] = max_wpm[1];
+            max_wpm[1] = max_wpm[2];
+            max_wpm[2] = max_wpm[3];
+            max_wpm[3] = max_wpm[4];
+            max_wpm[4] = current_wpm;
+        } else if (current_wpm > max_wpm[3]) {
+            max_wpm[0] = max_wpm[1];
+            max_wpm[1] = max_wpm[2];
+            max_wpm[2] = max_wpm[3];
+            max_wpm[3] = current_wpm;
+        } else if (current_wpm > max_wpm[2]) {
+            max_wpm[0] = max_wpm[1];
+            max_wpm[1] = max_wpm[2];
+            max_wpm[2] = current_wpm;
+        } else if (current_wpm > max_wpm[1]) {
+            max_wpm[0] = max_wpm[1];
+            max_wpm[1] = current_wpm;
+        } else if (current_wpm > max_wpm[0]) {
+            max_wpm[0] = current_wpm;
+        }
+    }
+
+    oled_write_ln_P(PSTR("WPM:\n"), false);
+    oled_write(get_u8_str(current_wpm, '0'), false);
+    oled_write_ln_P(PSTR("\n"), false);
+    oled_write_ln_P(PSTR("MAX:\n"), false);
+    for(uint8_t i = 0; i < 5; i++) {
+        oled_write(get_u8_str(max_wpm[i], '0'), false);
+        oled_write_ln_P(PSTR("\n"), false);
+    }
+
     return true;
 }
 
