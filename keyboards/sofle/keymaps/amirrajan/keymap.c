@@ -45,10 +45,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_SYMBOLS] = LAYOUT(
   KC_TILDE, KC_EXCLAIM,     KC_AT,          KC_HASH,       KC_DOLLAR,     KC_PERCENT,                       KC_CIRCUMFLEX,     KC_AMPERSAND,  KC_ASTERISK,       KC_LEFT_PAREN,  KC_RIGHT_PAREN,        KC_BACKSPACE,
-  KC_TAB,   KC_QUOTE,       KC_EQUAL,       KC_EQUAL,      XXXXXXX,       KC_TILDE,                         KC_QUESTION,       KC_LEFT_PAREN, KC_RIGHT_PAREN,    KC_PIPE,        KC_PLUS,               GUI_T(KC_BACKSLASH),
-  KC_LEFT,  KC_AMPERSAND,   S(KC_S),        KC_MINUS,      XXXXXXX,       KC_RABK,                          KC_HASH,           KC_LBRC,       KC_RBRC,           KC_LABK,        KC_COLON,              KC_DQUO,
+  KC_TAB,   KC_QUOTE,       KC_EQUAL,       KC_EQUAL,      KC_ENTER,      KC_TILDE,                         KC_QUESTION,       KC_LEFT_PAREN, KC_RIGHT_PAREN,    KC_PIPE,        KC_PLUS,               GUI_T(KC_BACKSLASH),
+  KC_LEFT,  KC_AMPERSAND,   S(KC_S),        KC_MINUS,      KC_UNDS,       KC_RABK,                          KC_HASH,           KC_LBRC,       KC_RBRC,           KC_LABK,        KC_COLON,              KC_DQUO,
   KC_RGHT,  KC_COMMA,       KC_ASTERISK,    KC_MS_BTN1,    LGUI(KC_V),    KC_BACKSPACE, KC_MUTE,    XXXXXXX,KC_EXCLAIM,        KC_LCBR,       KC_RCBR,           KC_RABK,        KC_UP,              KC_COLON,
-            KC_SPACE,KC_SPACE, KC_SPACE, KC_SPACE, KC_SPACE,          KC_BSPC,  KC_SPACE, KC_SPACE, KC_SPACE, KC_SPACE
+                                                KC_SPACE,KC_SPACE, KC_SPACE, KC_SPACE, KC_SPACE,    KC_BSPC,  KC_SPACE, KC_SPACE, KC_SPACE, KC_SPACE
 )
 /* /\* */
 /*  * COLEMAK */
