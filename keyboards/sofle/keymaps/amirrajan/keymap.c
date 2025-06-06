@@ -40,13 +40,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,     MT(MOD_LALT, KC_BACKSLASH),
   KC_LCTL,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,   KC_SCLN,  LGUI_T(KC_QUOTE),
   KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,            QK_BOOT,   XXXXXXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH,  KC_RSFT,
-                    KC_LCTL, KC_LALT, KC_UNDS, LT(1, KC_ENTER), KC_DOWN,   KC_UP,   KC_SPC,  KC_BSPC, KC_LEFT, KC_RIGHT
+                    KC_LCTL, KC_LALT, KC_UNDS, LT(1, KC_ENTER), KC_DOWN,   KC_UP, LT(1, KC_SPC),  KC_BSPC, KC_LEFT, KC_RIGHT
 ),
 
 [_SYMBOLS] = LAYOUT(
   KC_TILDE, KC_EXCLAIM,     KC_AT,          KC_HASH,       KC_DOLLAR,     KC_PERCENT,                       KC_CIRCUMFLEX,     KC_AMPERSAND,  KC_ASTERISK,       KC_LEFT_PAREN,  KC_RIGHT_PAREN,        KC_BACKSPACE,
-  KC_TAB,   KC_QUOTE,       KC_EQUAL,       KC_EQUAL,      KC_ENTER,      KC_TILDE,                         KC_QUESTION,       KC_LEFT_PAREN, KC_RIGHT_PAREN,    KC_PIPE,        KC_PLUS,               GUI_T(KC_BACKSLASH),
-  KC_LEFT,  KC_AMPERSAND,   S(KC_S),        KC_MINUS,      KC_UNDS,       KC_RABK,                          KC_HASH,           KC_LBRC,       KC_RBRC,           KC_LABK,        KC_COLON,              KC_DQUO,
+  KC_TAB,   KC_QUOTE,       KC_EQUAL,       KC_EQUAL,      XXXXXXX,       KC_TILDE,                         KC_QUESTION,       KC_LEFT_PAREN, KC_RIGHT_PAREN,    KC_PIPE,        KC_PLUS,               GUI_T(KC_BACKSLASH),
+  KC_LEFT,  KC_AMPERSAND,   S(KC_S),        KC_MINUS,      XXXXXXX,       KC_RABK,                          KC_HASH,           KC_LBRC,       KC_RBRC,           KC_LABK,        KC_COLON,              KC_DQUO,
   KC_RGHT,  KC_COMMA,       KC_ASTERISK,    KC_MS_BTN1,    LGUI(KC_V),    KC_BACKSPACE, KC_MUTE,    XXXXXXX,KC_EXCLAIM,        KC_LCBR,       KC_RCBR,           KC_RABK,        KC_UP,              KC_COLON,
             KC_SPACE,KC_SPACE, KC_SPACE, KC_SPACE, KC_SPACE,          KC_BSPC,  KC_SPACE, KC_SPACE, KC_SPACE, KC_SPACE
 )
@@ -143,12 +143,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) { /* First encoder */
-        if (clockwise) {
+    static int encoder_ticks = 0;
+
+    if (clockwise) ++encoder_ticks;
+    else --encoder_ticks;
+
+    if (encoder_ticks >= 10) {
+        encoder_ticks = 0;
+        if (index == 0) { /* First encoder */
+          if (clockwise) {
             tap_code(KC_VOLU); /* Volume up */
-        } else {
+          } else {
             tap_code(KC_VOLD); /* Volume Down */
+          }
         }
     }
+
     return true;
 }
