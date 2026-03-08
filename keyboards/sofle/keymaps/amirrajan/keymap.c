@@ -20,6 +20,8 @@ enum custom_keycodes {
 #define KC_COLEMAK PDF(_COLEMAK)
 #define LT_SYM LT(____PHONETIC_SYMBOLS, KC_ENT)
 #define LT_VIM LT(____VIM_EMULATION, KC_SPC)
+#define CTL_T_A CTL_T(KC_A)
+#define CTL_T_SCLN CTL_T(KC_SCLN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -42,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*TAB*/     /*q*/       /*w*/       /*e*/       /*r*/       /*t*/                                       /*y*/       /*u*/       /*i*/       /*o*/       /*p*/       /*\*/
   KC_TAB,     KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,                                       KC_Y,       KC_U,       KC_I,       KC_O,       KC_P,       MT(MOD_LALT, KC_BACKSLASH),
   /*CTRL*/    /*a*/       /*s*/       /*d*/       /*f*/       /*g*/                                       /*h*/       /*j*/       /*k*/       /*l*/       /*;*/       /*'*/
-  KC_LCTL,    KC_A,       KC_S,       KC_D,       KC_F,       KC_G,                                       KC_H,       KC_J,       KC_K,       KC_L,       KC_SCLN,    LGUI_T(KC_QUOTE),
+  KC_LCTL,    CTL_T_A,    KC_S,       KC_D,       KC_F,       KC_G,                                       KC_H,       KC_J,       KC_K,       KC_L,       CTL_T_SCLN, LGUI_T(KC_QUOTE),
   /*SHFT*/    /*z*/       /*x*/       /*c*/       /*v*/       /*b*/       /*◯*/               /*◯*/       /*n*/       /*m*/       /*,*/       /*.*/       /*/*/       /*SHFT*/
   KC_LSFT,    KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       QK_BOOT,            QK_REBOOT,  KC_N,       KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    KC_RSFT,
                           /*CTRL*/    /*META*/    /*THUMB*/   /*THUMB*/   /*THUMB*/           /*THUMB*/   /*THUMB*/   /*THUMB*/   /*LFT*/     /*RHT*/
@@ -78,9 +80,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*TAB*/     /*q*/       /*w*/       /*e*/       /*r*/       /*t*/                                       /*y*/       /*u*/       /*i*/       /*o*/       /*p*/       /*\*/
   XXXXXXX,    KC_Q,       KC_W,       C(KC_E),    KC_ENTER,   C(KC_T),                                    XXXXXXX,    XXXXXXX,    C(KC_I),    XXXXXXX,    XXXXXXX,    XXXXXXX,
   /*CTRL*/    /*a*/       /*s*/       /*d*/       /*f*/       /*g*/                                       /*h*/       /*j*/       /*k*/       /*l*/       /*;*/       /*'*/
-  KC_LCTL,    XXXXXXX,    KC_LSFT,    C(KC_C),    C(KC_F),    C(KC_G),                                    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   KC_COLON,   KC_QUOTE,
+  KC_LCTL,    XXXXXXX,    KC_LSFT,    C(KC_K),    C(KC_F),    C(KC_G),                                    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   KC_COLON,   KC_QUOTE,
   /*SHFT*/    /*z*/       /*x*/       /*c*/       /*v*/       /*b*/       /*◯*/               /*◯*/       /*n*/       /*m*/       /*,*/       /*.*/       /*/*/       /*SHFT*/
-  XXXXXXX,    C(KC_Z),    XXXXXXX,    C(KC_K),    C(KC_V),    C(KC_B),    XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
+  XXXXXXX,    C(KC_Z),    XXXXXXX,    C(KC_C),    C(KC_V),    C(KC_B),    XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                           /*CTRL*/    /*META*/    /*THUMB*/   /*THUMB*/   /*THUMB*/           /*THUMB*/   /*THUMB*/   /*THUMB*/   /*LFT*/     /*RHT*/
                           XXXXXXX,    XXXXXXX,    XXXXXXX,    KC_ESC,     XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX
 )
