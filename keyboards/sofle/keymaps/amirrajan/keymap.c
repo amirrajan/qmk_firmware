@@ -3,8 +3,6 @@
 #include QMK_KEYBOARD_H
 #undef TAPPING_TERM
 #define TAPPING_TERM 100
-#undef PERMISSIVE_HOLD
-#define PERMISSIVE_HOLD 1
 // #define MASTER_RIGHT 1
 
 enum sofle_layers {
@@ -80,11 +78,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*TAB*/     /*q*/       /*w*/       /*e*/       /*r*/       /*t*/                                       /*y*/       /*u*/       /*i*/       /*o*/       /*p*/       /*\*/
   XXXXXXX,    KC_Q,       KC_W,       C(KC_E),    KC_ENTER,   C(KC_T),                                    XXXXXXX,    XXXXXXX,    C(KC_I),    XXXXXXX,    XXXXXXX,    XXXXXXX,
   /*CTRL*/    /*a*/       /*s*/       /*d*/       /*f*/       /*g*/                                       /*h*/       /*j*/       /*k*/       /*l*/       /*;*/       /*'*/
-  KC_LCTL,    XXXXXXX,    KC_LSFT,    C(KC_C),    C(KC_F),    XXXXXXX,                                    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   KC_COLON,   KC_QUOTE,
+  KC_LCTL,    XXXXXXX,    KC_LSFT,    C(KC_C),    C(KC_F),    C(KC_G),                                    KC_LEFT,    KC_DOWN,    KC_UP,      KC_RIGHT,   KC_COLON,   KC_QUOTE,
   /*SHFT*/    /*z*/       /*x*/       /*c*/       /*v*/       /*b*/       /*◯*/               /*◯*/       /*n*/       /*m*/       /*,*/       /*.*/       /*/*/       /*SHFT*/
   XXXXXXX,    C(KC_Z),    XXXXXXX,    C(KC_K),    C(KC_V),    C(KC_B),    XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
                           /*CTRL*/    /*META*/    /*THUMB*/   /*THUMB*/   /*THUMB*/           /*THUMB*/   /*THUMB*/   /*THUMB*/   /*LFT*/     /*RHT*/
-                          XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX
+                          XXXXXXX,    XXXXXXX,    XXXXXXX,    KC_ESC,     XXXXXXX,            XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX
 )
 };
 
