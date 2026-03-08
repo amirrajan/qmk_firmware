@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*TAB*/     /*q*/       /*w*/       /*e*/       /*r*/       /*t*/                                       /*y*/       /*u*/       /*i*/       /*o*/       /*p*/       /*\*/
   KC_TAB,     KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,                                       KC_Y,       KC_U,       KC_I,       KC_O,       KC_P,       MT(MOD_LALT, KC_BACKSLASH),
   /*CTRL*/    /*a*/       /*s*/       /*d*/       /*f*/       /*g*/                                       /*h*/       /*j*/       /*k*/       /*l*/       /*;*/       /*'*/
-  KC_LCTL,    CTL_T_A,    KC_S,       KC_D,       KC_F,       KC_G,                                       KC_H,       KC_J,       KC_K,       KC_L,       CTL_T_SCLN, LGUI_T(KC_QUOTE),
+  KC_LCTL,    KC_A,       KC_S,       KC_D,       KC_F,       KC_G,                                       KC_H,       KC_J,       KC_K,       KC_L,       KC_SCLN,    LGUI_T(KC_QUOTE),
   /*SHFT*/    /*z*/       /*x*/       /*c*/       /*v*/       /*b*/       /*◯*/               /*◯*/       /*n*/       /*m*/       /*,*/       /*.*/       /*/*/       /*SHFT*/
   KC_LSFT,    KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       QK_BOOT,            QK_REBOOT,  KC_N,       KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    KC_RSFT,
                           /*CTRL*/    /*META*/    /*THUMB*/   /*THUMB*/   /*THUMB*/           /*THUMB*/   /*THUMB*/   /*THUMB*/   /*LFT*/     /*RHT*/
