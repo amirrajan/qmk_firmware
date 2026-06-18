@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*SHFT*/    /*z*/       /*x*/       /*c*/       /*v*/       /*b*/       /*◯*/               /*◯*/       /*n*/       /*m*/       /*,*/       /*.*/       /*/*/       /*SHFT*/
   KC_LSFT,    KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       QK_BOOT,            QK_REBOOT,  KC_N,       KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,    KC_RSFT,
                           /*CTRL*/    /*META*/    /*THUMB*/   /*THUMB*/   /*THUMB*/           /*THUMB*/   /*THUMB*/   /*THUMB*/   /*LFT*/     /*RHT*/
-                          KC_LCTL,    KC_LALT,    KC_UNDS,    LT_SYM,     KC_UP,              KC_DOWN,    LT_VIM,     KC_BSPC,    KC_LEFT,    KC_RIGHT),                                          /*
+                          KC_LCTL,    KC_LCMD,    KC_UNDS,    LT_SYM,     KC_UP,              KC_DOWN,    LT_VIM,     KC_BSPC,    KC_LEFT,    KC_RIGHT),                                          /*
                                                                 ┬                                           ┬
                                                                 │                                           │
                           PRESS AND HOLD KEY UNDER LEFT THUMB   │                                           │   PRESS AND HOLD KEY UNDER RIGHT THUMB
