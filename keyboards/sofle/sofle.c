@@ -1,10 +1,7 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
-#include "wpm.h"
 #include "quantum.h"
 
-#define WPM_ENABLE 1
-#define WPM_LAUNCH_CONTROL 1
 #ifdef SWAP_HANDS_ENABLE
 
 __attribute__ ((weak))
@@ -57,106 +54,6 @@ oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
     }
     return rotation;
 }
-
-static void render_logo(void) {
-    static const char PROGMEM qmk_logo[] = {
-        0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-        0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-        0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0
-    };
-    oled_write_P(qmk_logo, false);
-}
-
-void print_status_narrow(void) {
-    oled_write_P(PSTR("\n\n"), false);
-    switch (get_highest_layer(layer_state)) {
-        case 0:
-            oled_write_ln_P(PSTR("Qwrt"), false);
-            break;
-        case 1:
-            oled_write_ln_P(PSTR("Clmk"), false);
-            break;
-        default:
-            oled_write_P(PSTR("Mod\n"), false);
-            break;
-    }
-    oled_write_P(PSTR("\n\n"), false);
-    oled_write_ln_P(PSTR("LAYER"), false);
-    switch (get_highest_layer(layer_state)) {
-        case 0:
-        case 1:
-            oled_write_P(PSTR("Base\n"), false);
-            break;
-        case 2:
-            oled_write_P(PSTR("Raise"), false);
-            break;
-        case 3:
-            oled_write_P(PSTR("Lower"), false);
-            break;
-        default:
-            oled_write_ln_P(PSTR("Undef"), false);
-    }
-    oled_write_P(PSTR("\n\n"), false);
-    led_t led_usb_state = host_keyboard_led_state();
-    oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
-}
-
-bool oled_task_kb(void) {
-    if (!oled_task_user()) {
-        return false;
-    }
-
-    static uint8_t max_wpm[5] = {0, 0, 0, 0, 0}; // Array to keep track of the last 5 highest max WPM
-    static uint8_t debounce_upper = 255;
-    static uint8_t debounce_lower = 255;
-    debounce_lower -= 1;
-    if (debounce_lower <= 1) {
-      debounce_lower = 255;
-      debounce_upper -= 1;
-      if (debounce_upper <= 1) {
-        debounce_upper = 255;
-        max_wpm[3] = 0;
-        max_wpm[4] = 0;
-      }
-    }
-    uint8_t current_wpm = get_current_wpm();
-
-    int wpm_already_exists = 0;
-
-    // Shift the array if current WPM is greater than any of the saved max WPM values
-    if (!wpm_already_exists) {
-        if (current_wpm > max_wpm[4]) {
-            max_wpm[0] = max_wpm[1];
-            max_wpm[1] = max_wpm[2];
-            max_wpm[2] = max_wpm[3];
-            max_wpm[3] = max_wpm[4];
-            max_wpm[4] = current_wpm;
-        } else if (current_wpm > max_wpm[3]) {
-            max_wpm[0] = max_wpm[1];
-            max_wpm[1] = max_wpm[2];
-            max_wpm[2] = max_wpm[3];
-            max_wpm[3] = current_wpm;
-        } else if (current_wpm > max_wpm[2]) {
-            max_wpm[0] = max_wpm[1];
-            max_wpm[1] = max_wpm[2];
-            max_wpm[2] = current_wpm;
-        } else if (current_wpm > max_wpm[1]) {
-            max_wpm[0] = max_wpm[1];
-            max_wpm[1] = current_wpm;
-        } else if (current_wpm > max_wpm[0]) {
-            max_wpm[0] = current_wpm;
-        }
-    }
-
-    oled_write_ln_P(PSTR("MAX:\n"), false);
-    for(uint8_t i = 0; i < 5; i++) {
-        oled_write(get_u8_str(max_wpm[i], '0'), false);
-        oled_write_ln_P(PSTR("\n"), false);
-    }
-
-    return true;
-}
-
 #endif
 
 #ifdef ENCODER_ENABLE

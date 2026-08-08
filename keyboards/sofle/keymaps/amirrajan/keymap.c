@@ -6,22 +6,13 @@
 // #define MASTER_RIGHT 1
 
 enum sofle_layers {
-    /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     ____QWERTY,
     ____PHONETIC_SYMBOLS,
     ____VIM_EMULATION
 };
 
-enum custom_keycodes {
-    QWERTY = SAFE_RANGE
-};
-
-#define KC_QWERTY PDF(_QWERTY)
-#define KC_COLEMAK PDF(_COLEMAK)
 #define LT_SYM LT(____PHONETIC_SYMBOLS, KC_ENT)
 #define LT_VIM LT(____VIM_EMULATION, KC_SPC)
-#define CTL_T_A CTL_T(KC_A)
-#define CTL_T_SCLN CTL_T(KC_SCLN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -88,26 +79,59 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )
 };
 
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    return false; /* swallow rotation, do nothing */
+}
+
+/* Session keypress count (resets on power loss). Counted on master. */
+static uint32_t keypress_count = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        keypress_count++;
+    }
     return true;
 }
 
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    static int encoder_ticks = 0;
+#ifdef OLED_ENABLE
 
-    if (clockwise) ++encoder_ticks;
-    else --encoder_ticks;
-
-    if (encoder_ticks >= 10) {
-        encoder_ticks = 0;
-        if (index == 0) { /* First encoder */
-          if (clockwise) {
-            tap_code(KC_VOLU); /* Volume up */
-          } else {
-            tap_code(KC_VOLD); /* Volume Down */
-          }
-        }
+/* Master half: live WPM + session peak WPM + session keypresses (270). */
+static void render_status(void) {
+    uint8_t wpm = get_current_wpm();
+    static uint8_t max_wpm = 0;
+    if (wpm > max_wpm) {
+        max_wpm = wpm;
     }
 
-    return true;
+    char buf[11];
+
+    oled_write_ln_P(PSTR("WPM"), false);
+    snprintf(buf, sizeof(buf), "%u", wpm);
+    oled_write_ln(buf, false);
+
+    oled_write_P(PSTR("\n"), false);
+
+    oled_write_ln_P(PSTR("MAX"), false);
+    snprintf(buf, sizeof(buf), "%u", max_wpm);
+    oled_write_ln(buf, false);
+
+    oled_write_P(PSTR("\n"), false);
+
+    oled_write_ln_P(PSTR("KEYS"), false);
+    snprintf(buf, sizeof(buf), "%lu", (unsigned long)keypress_count);
+    oled_write_ln(buf, false);
 }
+
+#define FAST_TYPE_WPM 70 /* fast bars above this; tuned for a 90+ wpm typist */
+#include "music-bars.c"
+
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        render_status();
+    } else {
+        oled_render_anim(); /* music bars, scales with WPM */
+    }
+    return false;
+}
+
+#endif
