@@ -129,9 +129,17 @@ static void render_status(void) {
     oled_write_ln(buf, false);
 }
 
-#include "matrix-rain.c"
+/* Slave-half eye candy. Pick one. */
+#define ANIM_GAME_OF_LIFE
+// #define ANIM_MATRIX_RAIN
 
-/* Both halves portrait; rain falls along the long axis. */
+#ifdef ANIM_GAME_OF_LIFE
+#    include "game-of-life.c"
+#else
+#    include "matrix-rain.c"
+#endif
+
+/* Both halves portrait so the animation runs along the long axis. */
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;
 }
@@ -140,7 +148,7 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_status();
     } else {
-        oled_render_anim(); /* matrix rain, purely decorative */
+        oled_render_anim(); /* purely decorative */
     }
     return false;
 }
