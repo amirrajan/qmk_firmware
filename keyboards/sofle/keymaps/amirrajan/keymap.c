@@ -130,13 +130,16 @@ static void render_status(void) {
 }
 
 /* Slave-half eye candy. Pick one. */
-#define ANIM_GAME_OF_LIFE
+// #define ANIM_GAME_OF_LIFE
 // #define ANIM_MATRIX_RAIN
+#define ANIM_LUNA
 
-#ifdef ANIM_GAME_OF_LIFE
+#if defined(ANIM_GAME_OF_LIFE)
 #    include "game-of-life.c"
-#else
+#elif defined(ANIM_MATRIX_RAIN)
 #    include "matrix-rain.c"
+#else
+#    include "luna.c"
 #endif
 
 /* Both halves portrait so the animation runs along the long axis. */
