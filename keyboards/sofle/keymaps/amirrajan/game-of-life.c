@@ -32,6 +32,12 @@
 #ifndef GOL_EEPROM_SEED
 #    define GOL_EEPROM_SEED 1
 #endif
+/* 1 = HighLife (B36/S23), 0 = Conway's Life (B3/S23).
+ * HighLife's extra birth-on-6 rule permits self-replicating patterns, so the
+ * board churns for far longer before settling. */
+#ifndef GOL_HIGHLIFE
+#    define GOL_HIGHLIFE 1
+#endif
 
 static uint16_t gol_rows[GOL_ROWS];
 static uint16_t gol_next[GOL_ROWS];
@@ -147,13 +153,21 @@ static void oled_render_anim(void) {
         uint16_t s0, c0, t0, t1, s1, c1;
         gol_add3(u0, m0, d0, &s0, &c0); /* bit 0 of the count */
         gol_add3(u1, m1, d1, &t0, &t1);
-        gol_add2(t0, c0, &s1, &c1); /* bit 1 of the count   */
-        uint16_t hi = t1 | c1;      /* count >= 4 -> too crowded */
+        gol_add2(t0, c0, &s1, &c1);     /* bit 1 of the count */
+        uint16_t s2 = t1 ^ c1;          /* bit 2: t1 and c1 both carry weight 4 */
+        uint16_t s3 = t1 & c1;          /* bit 3: only set when the count is 8  */
 
-        /* Born on exactly 3, survive on 2 or 3. */
-        uint16_t three = s0 & s1 & ~hi;
-        uint16_t two   = ~s0 & s1 & ~hi;
-        uint16_t alive = (uint16_t)(three | (m & two));
+        /* Neighbour counts as bit patterns of (s3 s2 s1 s0). */
+        uint16_t two   = (uint16_t)(~s0 & s1 & ~s2 & ~s3); /* 0010 */
+        uint16_t three = (uint16_t)(s0 & s1 & ~s2 & ~s3);  /* 0011 */
+
+        /* alive = (live && survives) || (dead && born) */
+#if GOL_HIGHLIFE
+        uint16_t six   = (uint16_t)(~s0 & s1 & s2 & ~s3);  /* 0110 */
+        uint16_t alive = (uint16_t)((m & (two | three)) | (~m & (three | six)));
+#else
+        uint16_t alive = (uint16_t)((m & (two | three)) | (~m & three));
+#endif
 
         gol_next[r] = alive;
         hash        = (uint16_t)((hash << 1 | hash >> 15) ^ alive);
