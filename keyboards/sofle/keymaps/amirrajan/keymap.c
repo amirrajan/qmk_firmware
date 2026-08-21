@@ -118,18 +118,29 @@ static void render_status(void) {
     oled_write_P(PSTR("\n"), false);
 
     oled_write_ln_P(PSTR("KEYS"), false);
-    snprintf(buf, sizeof(buf), "%lu", (unsigned long)keypress_count);
+    /* OLED line is 5 chars wide; compact past 99,999 so it doesn't wrap. */
+    if (keypress_count > 9999999UL) {
+        snprintf(buf, sizeof(buf), "%luM", (unsigned long)(keypress_count / 1000000UL));
+    } else if (keypress_count > 99999UL) {
+        snprintf(buf, sizeof(buf), "%luK", (unsigned long)(keypress_count / 1000UL));
+    } else {
+        snprintf(buf, sizeof(buf), "%lu", (unsigned long)keypress_count);
+    }
     oled_write_ln(buf, false);
 }
 
-#define FAST_TYPE_WPM 70 /* fast bars above this; tuned for a 90+ wpm typist */
-#include "music-bars.c"
+#include "matrix-rain.c"
+
+/* Both halves portrait; rain falls along the long axis. */
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    return OLED_ROTATION_270;
+}
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_status();
     } else {
-        oled_render_anim(); /* music bars, scales with WPM */
+        oled_render_anim(); /* matrix rain, purely decorative */
     }
     return false;
 }
